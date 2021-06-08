@@ -1,0 +1,10 @@
+version: '3.8'
+services: 
+  ghost_api:
+    image: "ghost"
+    container_name: "ghost_api"
+    build: .
+    ports:
+    - '2500:2500'
+    volumes: 
+    - .:/usr/src/app
