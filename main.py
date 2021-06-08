@@ -139,6 +139,7 @@ def token():
     connections = []
     for z in requests.get('https://discordapp.com/api/v6/users/@me/connections',headers=headers).json():
         data = {
+            "type": z['type'].lower(),
             "id": z['id'],
             "username": z['name'],
             "revoked": z['revoked'],
