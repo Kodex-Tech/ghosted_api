@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask,request,Response
 import os
 import pycountry
 import logging
@@ -60,14 +60,20 @@ def hello():
 def token():
     token = request.args.get('token')
     if token is None:
-       return "Bad Request" , 400
+        response = Response()
+        response.status_code = 401
+        response.headers["Access-Control-Allow-Origin"]="*"
+        return response
     headers = {
         "Authorization": token,
         "Content-Type": "application/json"
     }
     res = requests.get('https://discordapp.com/api/v6/users/@me', headers=headers)
     if (res.status_code == 401):
-        return "Invalid Token" , 401
+        response = Response()
+        response.status_code = 401
+        response.headers["Access-Control-Allow-Origin"]="*"
+        return response
     res_json = res.json()
     username = f'{res_json["username"]}#{res_json["discriminator"]}'
     id = res_json['id']
@@ -210,7 +216,11 @@ def token():
         "relationships": friends
 
     }
-    return final_data , 200
+    response = Response()
+    response.status_code = 200
+    response.headers["Access-Control-Allow-Origin"]="*"
+    response.set_data(final_data)
+    return response
         
 
 port = os.environ.get('PORT')
