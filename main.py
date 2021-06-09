@@ -3,6 +3,7 @@ import os
 import pycountry
 import logging
 import requests
+import json
 from rich.logging import RichHandler
 from datetime import datetime
 FORMAT = "%(message)s"
@@ -219,7 +220,7 @@ def token():
     response = Response()
     response.status_code = 200
     response.headers["Access-Control-Allow-Origin"]="*"
-    response.set_data(final_data)
+    response.set_data(json.dumps(final_data))
     return response
         
 
