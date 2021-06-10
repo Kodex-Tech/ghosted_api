@@ -78,7 +78,7 @@ def token():
     res_json = res.json()
     username = f'{res_json["username"]}#{res_json["discriminator"]}'
     id = res_json['id']
-    avatar = f"https://cdn.discordapp.com/avatars/{res_json['id']}/{res_json['avatar']}.gif"
+    avatar = f"https://cdn.discordapp.com/avatars/{res_json['id']}/{res_json['avatar']}.png"
     phone = res_json['phone'] if res_json['phone'] else None
     email = res_json['email']
     mfa = res_json['mfa_enabled']
@@ -198,7 +198,7 @@ def token():
             "status": relation_types[str(b['type'])],
             "nickname": b['nickname'],
             "username": b['user']['username']+"#"+b['user']['discriminator'],
-            'avatar': f"https://cdn.discordapp.com/avatars/{b['id']}/{b['user']['avatar']}.gif",
+            'avatar': f"https://cdn.discordapp.com/avatars/{b['id']}/{b['user']['avatar']}.png",
         }
         friends.append(data)
     final_data = {
