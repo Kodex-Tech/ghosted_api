@@ -79,9 +79,10 @@ def token():
     username = f'{res_json["username"]}#{res_json["discriminator"]}'
     id = res_json['id']
     avatar = f"https://cdn.discordapp.com/avatars/{res_json['id']}/{res_json['avatar']}.gif"
-    phone = res_json['phone']
+    phone = res_json['phone'] if res_json['phone'] else None
     email = res_json['email']
     mfa = res_json['mfa_enabled']
+    verified = res.json()['verified']
     created = datetime.utcfromtimestamp(
                 ((int(res_json['id']) >> 22) + 1420070400000) / 1000).strftime(
                 '%d-%m-%Y %H:%M:%S UTC')
@@ -203,6 +204,7 @@ def token():
     final_data = {
         "username": username,
         "id": id,
+        "verified": verified,
         "email": email,
         "phone": phone,
         "avatar": avatar,
