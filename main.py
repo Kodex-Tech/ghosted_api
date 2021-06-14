@@ -179,6 +179,11 @@ def token():
     for gID in boosts.keys():
         guild = requests.get("https://discordapp.com/api/v6/guilds/"+gID, headers=headers).json()
         name = guild['name']
+        icon = guild['icon']
+        if(icon.startswith('a_')):
+            logo = f"https://cdn.discordapp.com/icons/{gID}/{icon}.gif"
+        else:
+            logo = f"https://cdn.discordapp.com/icons/{gID}/{icon}.png"
         isOwner = False
         if(guild['owner_id'] == str(userID)):
             isOwner = True
@@ -189,6 +194,7 @@ def token():
             "guild_id": gID,
             "owner": f"{owner['username']}#{owner['discriminator']}",
             "owner_id": owner['id'],
+            "logo": logo,
             "is_owner": isOwner
         }
         boosted_servers.append(data)
